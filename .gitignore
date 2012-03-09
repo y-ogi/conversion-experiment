@@ -1,0 +1,16 @@
+*.pyc
+._.gitignore
+*.swp
+.idea
+.project
+.pydevproject
+.settings
+.datastore
+templates_compiled
+bulkloader-log-*
+bulkloader-progress-*
+bulkloader-results-*
+*.bulk.dat
+bulkloader-dat.*
+kay
+manage.py

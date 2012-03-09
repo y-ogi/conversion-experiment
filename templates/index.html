@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>{% block title %}{% endblock %}</title>
+        {% block javascript %}
+        <script src="/media/js/jquery.min.js"></script>
+        <script src="/media/js/jquery.tmpl.min.js"></script>
+        <script src="/media/js/bootstrap.min.js"></script>
+        {% endblock %}
+        {% block stylesheet %}
+        <link rel="stylesheet" href="/media/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/media/css/base.css">
+        {% endblock %}
+    </head>
+    <body>
+        {% block topbar %}
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="">{% block appname %}[ Application Name ]{% endblock %}</a>
+                    <div class="nav-collapse">
+                        <ul class="nav pull-right">
+                            <li class="divider-vertical"></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Menu
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href=""><i class="icon-home"></i> Home</a></li>
+                                    <li><a href=""><i class="icon-cog"></i> Settings</a></li>
+                                    <li class="divider"></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        <div class="container">
+            <div class="content">
+                <div class="page-header">
+                    {% block pageheader %}{% endblock %}
+                    <div id="alert-area"></div>
+                </div>
+                <div class="row">
+                    <div class="span10">
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+
+        <footer>
+            <p>[ footer ]</p>
+        </footer>
+        </div><!-- /container -->
+    </body>
+
+    {% if flash %}
+    <!-- alert template -->
+    <script id="alert-tmpl" type="text/x-jquery-tmpl">
+    <div class="alert {{ flash.status }}" data-alert="alert">
+        <a class="close" href="#">×</a>
+        <p>{{ flash.message }}</p>
+    </div>
+    </script>
+    <script>
+        $('#alert-area').append($('#alert-tmpl').tmpl());
+        $('.alert').delay(2000).fadeOut('slow');
+    </script>
+    {% endif %}
+
+    <!-- javascript for alert emssage -->
+    {% block endbody %}
+    <script type="text/javascript">
+    </script>
+    {% endblock %}
+</html>
