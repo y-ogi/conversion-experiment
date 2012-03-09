@@ -8,6 +8,21 @@ A sample of kay settings.
                      All rights reserved.
 :license: BSD, see LICENSE for more details.
 """
+import os
+import sys
+import logging
+# library path setting
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+PROJECT_LIB_DIR = os.path.join(PROJECT_DIR, 'lib')
+sys.path.insert(0, os.path.join(PROJECT_LIB_DIR, 'reportlab.zip'))
+sys.path.insert(0, os.path.join(PROJECT_LIB_DIR, 'html5lib.zip'))
+sys.path.insert(0, os.path.join(PROJECT_LIB_DIR, 'rl_addons.zip'))
+sys.path.insert(0, os.path.join(PROJECT_LIB_DIR, 'xhtml2pdf.zip'))
+
+# static dir
+STATIC_DIR = os.path.join(PROJECT_DIR, 'static')
+STATIC_IMAGE_DIR = os.path.join(STATIC_DIR, 'images')
+STATIC_FONTS_DIR = os.path.join(STATIC_DIR, 'fonts')
 
 DEFAULT_TIMEZONE = 'Asia/Tokyo'
 DEBUG = True

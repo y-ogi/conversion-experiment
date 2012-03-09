@@ -14,3 +14,5 @@ bulkloader-results-*
 bulkloader-dat.*
 kay
 manage.py
+lib
+static
