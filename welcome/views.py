@@ -4,13 +4,35 @@ welcome.views
 """
 import logging
 
-from werkzeug import Response
-from kay.utils import render_to_response
+from werkzeug import (
+    Response, redirect
+)
 
-# Create your views here.
+from kay.utils import (
+    render_to_response, url_for
+)
+from welcome.forms import DocForm
 
 def index(request):
-    return render_to_response('welcome/index.html', {'message': 'Hello'})
+
+    form = DocForm()
+
+    return render_to_response('welcome/index.html', {
+        'form': form.as_widget(),
+    })
+
+
+def create(request):
+
+    form = DocForm()
+    if request.method == 'POST' and form.validate(request.form):
+
+        from common.utils import pdfcreator
+        return Response(pdfcreator.create(form['doc']), status=200, content_type='application/pdf')
+
+    else:
+        return redirect(url_for('welcome/index'))
+
 
 def makepdf_with_conversion(request):
 
@@ -36,44 +58,19 @@ def makepdf_with_conversion(request):
 
 def makepdf_with_pisa(request):
 
-    def makepdf_using_pisa():
+    doc = u"""
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+    </head>
+    <body>
+        <h1>あいうえお</h1>
+        <hr/>
+        <div style="border-color: black">aaaaaaaaaa</div>
+    </body>
+</html>
+    """
 
-        import os
-        from kay.conf import settings
-        import cStringIO as StringIO
-
-        from reportlab.pdfgen import canvas
-        from reportlab.pdfbase import pdfmetrics
-        from reportlab.pdfbase.ttfonts import TTFont
-
-        import xhtml2pdf.pisa as pisa
-
-        result = StringIO.StringIO()
-        pdf = pisa.pisaDocument(u'<b>aaaaaaaaあ</b>', result)
-
-        return result.getvalue()
-
-
-    def makepdf_using_xml2pdf():
-        import os
-        from kay.conf import settings
-        import cStringIO as StringIO
-
-        from reportlab.pdfgen import canvas
-        from reportlab.pdfbase import pdfmetrics
-        from reportlab.pdfbase.ttfonts import TTFont
-
-
-        result = StringIO.StringIO()
-        fontname = "IPA Gothic"
-        #フォントファイルを指定して、フォントを登録
-        pdfmetrics.registerFont(TTFont('IPA Gothic', os.path.join(settings.STATIC_FONTS_DIR, 'ipamp.ttf')))
-        c = canvas.Canvas(result)
-        c.setFont(fontname, 10)
-        c.drawString(100, 675, u"日本語でこんにちは！")
-        c.showPage()
-        c.save()
-
-        return result.getvalue()
-
-    return Response(makepdf_using_pisa(), status=200, content_type='application/pdf')
+    from common.utils import pdfcreator
+    return Response(pdfcreator.create(doc), status=200, content_type='application/pdf')
