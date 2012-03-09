@@ -6,3 +6,14 @@ So, I have decided to use PISA.
 
 Demo:
 http://conversion-experiment.appspot.com/
+
+In order to run this demo, you need some libraries and files.
+
+kay /root/kay
+manage.py /root/manage.py
+
+reportlab /root/lib/reportlab.zip
+html5lib /root/lib/html5lib.zip
+rl_addons /root/lib/rl_addons.zip
+xhtml2pdf /root/lib/xhtml2pdf.zip
+
