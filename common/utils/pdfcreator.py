@@ -12,6 +12,9 @@ def create(doc):
     import xhtml2pdf.pisa as pisa
 
 
+    # replace path
+    doc = doc.replace('%PATH%', settings.STATIC_IMAGE_DIR)
+
     result = StringIO.StringIO()
     pdf = pisa.pisaDocument(doc, result)
 
